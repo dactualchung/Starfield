@@ -16,7 +16,7 @@ void setup()
 }
 void draw()
 {
-  fill(0,0,0,10);
+  fill(0,0,0,13);
   rect(0,0,500,500);
   for (int i = 0; i < normies.length; i++) {
     normies[i].show();
