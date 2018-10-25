@@ -16,7 +16,8 @@ void setup()
 }
 void draw()
 {
-  background(0);
+  fill(0,0,0,10);
+  rect(0,0,500,500);
   for (int i = 0; i < normies.length; i++) {
     normies[i].show();
     normies[i].move();
@@ -25,23 +26,33 @@ void draw()
 }
 class NormalParticle implements Particle
 {
-  double myX, myY, myAngle, mySpeed, mySizeOffset;
+  double myX, myY, myAngle, mySpeed, mySizeOffset, myOriginalAngle;
   color myColor;
   NormalParticle() {
     myX = 250;
     myY = 250;
-    myAngle = (Math.random()*2)*Math.PI;
+    myAngle = myOriginalAngle = (Math.random()*2)*Math.PI;
     mySpeed = (Math.random()*5)+0.000001;
     myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
-    mySizeOffset = ((int)(Math.random()*4)+ 15);
+    mySizeOffset = ((int)(Math.random()*2)+ 10);
   }
   public void move() {
     myX = myX + Math.cos(myAngle) * mySpeed;
     myY = myY + Math.sin(myAngle) * mySpeed;
-    myAngle = myAngle + 0.02;
+    if (myAngle <= 2*PI + myOriginalAngle && direction == true) {
+      myAngle = myAngle + 0.02;
+    } else if (myAngle > 2*PI + myOriginalAngle) {
+      direction = false;
+    }
+    if (direction == false) {
+      myAngle = myAngle - 0.02;
+      if (myAngle < myOriginalAngle) {
+        direction = true;
+      }
+    }
   }
   public void show() {
-    stroke(0);
+    noStroke();
     fill(myColor);
     ellipse((float)myX, (float)myY, (float)mySizeOffset + (cos(angle + PI) * (float)mySizeOffset) + (float)mySizeOffset, (float)mySizeOffset + (cos(angle + PI) * (float)mySizeOffset) + (float)mySizeOffset);
   }
@@ -80,15 +91,15 @@ class OddballParticle implements Particle
     noStroke();
     myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
     fill(myColor);
-    ellipse((float)myX, (float)myY, 15 + (cos(angle + PI) * 15) + 15,  15 + (cos(angle + PI) * 15) + 15);
+    ellipse((float)myX, (float)myY, 10 + (cos(angle + PI) * 10) + 10,  10 + (cos(angle + PI) * 10) + 10);
   }
 }
 class JumboParticle extends NormalParticle
 
 {
   public void show(){
-    stroke(0);
+    noStroke();
     fill(myColor);
-    ellipse((float)myX, (float)myY, 33 + (cos(angle + PI) * 33) + 33, 33 + (cos(angle + PI) * 33) + 33);
+    ellipse((float)myX, (float)myY, 10 + (cos(angle + PI) * 38) + 38, 10 + (cos(angle + PI) * 38) + 38);
   }
 }
