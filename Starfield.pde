@@ -95,8 +95,15 @@ class OddballParticle implements Particle
   }
 }
 class JumboParticle extends NormalParticle
-
 {
+  JumboParticle() {
+    myX = 250;
+    myY = 250;
+    myAngle = myOriginalAngle = (Math.random()*2)*Math.PI;
+    mySpeed = (Math.random()*5)+0.000001;
+    myColor = color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
+    mySizeOffset = ((int)(Math.random()*2)+ 10);
+  }
   public void show(){
     noStroke();
     fill(myColor);
